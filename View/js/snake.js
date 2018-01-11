@@ -11,6 +11,11 @@ var snake ={x:10,y:10};
 		ctx.fillRect(0,0,400,400);
 	}
 
+	function draw(x, y, color){
+		ctx.fillStyle=color;
+		ctx.fillRect(x*unit,y*unit,unit,unit);
+	}
+
 ctx.fillStyle = "#FF0000";
 ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
 	// function interact with keyboard left, up, right, down
@@ -31,8 +36,9 @@ ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
 		}
 
 		emptySpace();
-		ctx.fillStyle = "#FF0000";
-		ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
+		draw(snake.x,snake.y,"red");
+		//ctx.fillStyle = "#FF0000";
+		//ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
 	});
 
 });
