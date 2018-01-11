@@ -4,6 +4,12 @@ var snakeCanvas = $("#snakeCanvas")[0];
 var ctx = snakeCanvas.getContext("2d");
 var unit = 10; // the unit size of snake and food
 var snake ={x:10,y:10};
+	
+	// empty the space, clear the trace of the snake
+	function emptySpace(){
+		ctx.fillStyle="white";
+		ctx.fillRect(0,0,400,400);
+	}
 
 ctx.fillStyle = "#FF0000";
 ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
@@ -24,7 +30,7 @@ ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
 			snake.y++;
 		}
 
-
+		emptySpace();
 		ctx.fillStyle = "#FF0000";
 		ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
 	});
