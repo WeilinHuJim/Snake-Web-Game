@@ -26,17 +26,11 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 	}
 
 	function bodyMove(){
-		if (snake.length>2){
-				snake[2].x =snake[1].x;
-				snake[2].y =snake[1].y;
-				snake[1].x =snake[0].x;
-				snake[1].y =snake[0].y;
-				
-		}
-		if (snake.length>1 ){
-				snake[1].x =snake[0].x;
-				snake[1].y =snake[0].y;
-				
+		if (snake.length>1){
+			for (i=snake.length-1;i>0;i--){
+				snake[i].x=snake[i-1].x;
+				snake[i].y=snake[i-1].y;
+			}
 		}
 	}
 
