@@ -2,17 +2,16 @@ $(document).ready(function(){
 
 var snakeCanvas = $("#snakeCanvas")[0];
 var ctx = snakeCanvas.getContext("2d");
-var unit = 10; // the unit size of snake and food
-var direction = "Right";
-var initialsnake ={x:10,y:10};
-var snake = [initialsnake];
-var food = {x:20,y:20};
-var score = 0
+var unit = 10; 					// the unit size of snake and food
+var direction = "Right"; 		// default direction is towards right
+var initialsnake ={x:10,y:10};  // initial location of snake
+var snake = [initialsnake];    	// the entire entity of snake
+var food = {x:20,y:20};			// initial location of food
+var score = 0					// score start from 0
 //draw food 
 draw(food.x,food.y,"blue"); //draw food square
-for (s in snake){
-	draw(snake[s].x, snake[s].y, "red"); //draw snake square
-}
+draw(snake[0].x, snake[0].y, "red"); //draw snake square
+
 
 
 	// empty the space, clear the trace of the snake
@@ -26,24 +25,37 @@ for (s in snake){
 		ctx.fillRect(x*unit,y*unit,unit,unit);
 	}
 
+	function bodyMove(){
+		if (snake.length>1){
+			for (var i=1; i<snake.length;i++){
+			snake[i].x =snake[i-1].x;
+			snake[i].y =snake[i-1].y;
+			}
+		}
+	}
+
 
 	// function interact with keyboard left, up, right, down
 	$(document).keydown(function(event){
 		var key = event.which;
 		// keyCode 37 - Left, 38 - Up, 39 - Right, 40 - Down
 		if (key == 37){
+			bodyMove()
 			snake[0].x--;
 			direction="Left";
 		}
 		if (key == 38){
+			bodyMove()
 			snake[0].y--;
 			direction="Up";
 		}
 		if (key == 39){
+			bodyMove()
 			snake[0].x++;
 			direction="Right"; 
 		}
 		if (key == 40){
+			bodyMove()
 			snake[0].y++;
 			direction="Down";
 		}
@@ -51,6 +63,7 @@ for (s in snake){
 		if(food.x == snake[0].x && food.y == snake[0].y){
 			score++;
 			$("#score").text(score);
+			snake.push({x:food.x,y:food.y});
 		}
 		emptySpace();
 		for (s in snake){
