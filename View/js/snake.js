@@ -26,11 +26,17 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 	}
 
 	function bodyMove(){
-		if (snake.length>1){
-			for (var i=1; i<snake.length;i++){
-			snake[i].x =snake[i-1].x;
-			snake[i].y =snake[i-1].y;
-			}
+		if (snake.length>2){
+				snake[2].x =snake[1].x;
+				snake[2].y =snake[1].y;
+				snake[1].x =snake[0].x;
+				snake[1].y =snake[0].y;
+				
+		}
+		if (snake.length>1 ){
+				snake[1].x =snake[0].x;
+				snake[1].y =snake[0].y;
+				
 		}
 	}
 
@@ -40,22 +46,22 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 		var key = event.which;
 		// keyCode 37 - Left, 38 - Up, 39 - Right, 40 - Down
 		if (key == 37){
-			bodyMove()
+			bodyMove();
 			snake[0].x--;
 			direction="Left";
 		}
 		if (key == 38){
-			bodyMove()
+			bodyMove();
 			snake[0].y--;
 			direction="Up";
 		}
 		if (key == 39){
-			bodyMove()
+			bodyMove();
 			snake[0].x++;
 			direction="Right"; 
 		}
 		if (key == 40){
-			bodyMove()
+			bodyMove();
 			snake[0].y++;
 			direction="Down";
 		}
@@ -66,9 +72,12 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 			snake.push({x:food.x,y:food.y});
 		}
 		emptySpace();
+		var test ="x and y: ";
 		for (s in snake){
 			draw(snake[s].x, snake[s].y, "red"); //draw snake square
-		}		
+			test= test +s+" " +snake[s].x +" "+ snake[s].y +" ";
+		}	
+		$("#test").text(test);	
 		draw(food.x,food.y,"blue");
 		//ctx.fillStyle = "#FF0000";
 		//ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
