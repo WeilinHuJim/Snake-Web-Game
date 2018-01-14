@@ -19,7 +19,7 @@ draw(food.x,food.y,"blue"); //draw food square
 draw(snake[0].x, snake[0].y, "red"); //draw snake square
 
 	function setFood(){
-
+		// while ....
 		food = {
 			x:Math.round(Math.random()*(width-unit)/unit),
 			y:Math.round(Math.random()*(height-unit)/unit)
@@ -46,6 +46,15 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 		}
 	}
 
+	function checkCollision(){
+		head = snake.shift();
+		for (each in snake){
+			if (head.x == snake[each].x && head.y == snake[each].y){
+				$("#over").text("Game Over !");
+			}
+		}
+		snake.unshift(head);
+	}
 
 	// function interact with keyboard left, up, right, down
 	$(document).keydown(function(event){
@@ -77,6 +86,7 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 			$("#score").text(score);
 			snake.push({x:food.x,y:food.y});
 		}
+		checkCollision();
 		emptySpace();
 		var test ="x and y: ";
 		for (s in snake){
