@@ -15,9 +15,9 @@ var food;
 setFood();
 var score = 0					// score start from 0
 //draw food 
-draw(food.x,food.y,"blue"); //draw food square
+draw(food.x,food.y,"blue"); 	//draw food square
 draw(snake[0].x, snake[0].y, "red"); //draw snake square
-
+var growth = false;  			//token that determines snake growth or not
 	function setFood(){
 		// while ....
 		food = {
@@ -38,12 +38,15 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 	}
 
 	function bodyMove(){
-		if (snake.length>1){
-			for (i=snake.length-1;i>0;i--){
-				snake[i].x=snake[i-1].x;
-				snake[i].y=snake[i-1].y;
-			}
+		if (growth){
+			snake.push({x:snake[snake.length-1].x,y:snake[snake.length-1].y});
+			growth=false;
 		}
+		for (i=snake.length-1;;i>0;i--){
+			snake[i].x=snake[i-1].x;
+			snake[i].y=snake[i-1].y;
+		}
+		
 	}
 
 	function checkCollision(){
@@ -84,7 +87,8 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 		if(food.x == snake[0].x && food.y == snake[0].y){
 			score++;
 			$("#score").text(score);
-			snake.push({x:food.x,y:food.y});
+			growth=true;
+			//snake.push({x:food.x,y:food.y});
 		}
 		checkCollision();
 		emptySpace();
@@ -95,8 +99,6 @@ draw(snake[0].x, snake[0].y, "red"); //draw snake square
 		}	
 		$("#test").text(test);	
 		draw(food.x,food.y,"blue");
-		//ctx.fillStyle = "#FF0000";
-		//ctx.fillRect(snake.x*unit,snake.y*unit,unit,unit);
 	});
 
 });
