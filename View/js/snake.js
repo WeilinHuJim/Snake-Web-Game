@@ -2,17 +2,29 @@ $(document).ready(function(){
 
 var snakeCanvas = $("#snakeCanvas")[0];
 var ctx = snakeCanvas.getContext("2d");
+var width = $("#snakeCanvas").width();
+var height = $("#snakeCanvas").height();
 var unit = 10; 					// the unit size of snake and food
 var direction = "Right"; 		// default direction is towards right
-var initialsnake ={x:10,y:10};  // initial location of snake
+var initialsnake ={
+		x:Math.round(Math.random()*2*(width-unit)/unit/3),
+		y:Math.round(Math.random()*(height-unit)/unit)
+		};  					// randomly pick initial location of snake,since default direction is right, the random value of x coordinate is 2/3 of the total width
 var snake = [initialsnake];    	// the entire entity of snake
-var food = {x:20,y:20};			// initial location of food
+var food;
+setFood();
 var score = 0					// score start from 0
 //draw food 
 draw(food.x,food.y,"blue"); //draw food square
 draw(snake[0].x, snake[0].y, "red"); //draw snake square
 
+	function setFood(){
 
+		food = {
+			x:Math.round(Math.random()*(width-unit)/unit),
+			y:Math.round(Math.random()*(height-unit)/unit)
+		};
+	}
 
 	// empty the space, clear the trace of the snake
 	function emptySpace(){
