@@ -42,7 +42,8 @@ var growth = false;  			//token that determines snake growth or not
 			snake.push({x:snake[snake.length-1].x,y:snake[snake.length-1].y});
 			growth=false;
 		}
-		for (i=snake.length-1;;i>0;i--){
+
+		for (i=snake.length-1;i>0;i--){
 			snake[i].x=snake[i-1].x;
 			snake[i].y=snake[i-1].y;
 		}
