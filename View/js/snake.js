@@ -12,12 +12,14 @@ var initialsnake ={
 		};  					// randomly pick initial location of snake
 var snake = [initialsnake];    	// the entire entity of snake
 var food;
-setFood();
+setFood();						// set ihe first food
 var score = 0					// score start from 0
 //draw food 
 draw(food.x,food.y,"blue"); 	//draw food square
 draw(snake[0].x, snake[0].y, "red"); //draw snake square
 var growth = false;  			//token that determines snake growth or not
+	
+	// generate food at random location
 	function setFood(){
 		food = {
 			x:Math.round(Math.random()*(width-unit)/unit),
@@ -30,15 +32,17 @@ var growth = false;  			//token that determines snake growth or not
 		ctx.fillStyle="white";
 		ctx.fillRect(0,0,400,400);
 	}
-
+	// draw one square with given x, y coordinate and color
 	function draw(x, y, color){
 		ctx.fillStyle=color;
 		ctx.fillRect(x*unit,y*unit,unit,unit);
 	}
 
 	var gameProcess = setInterval(autoMove, 300); // set autoMove once by 0.3 second (300 miliseconds)
+	// snake movements according the current direction
 	function autoMove(){
 		switch(direction){
+			// switch case, snake moves according to the direction
 			case "Left":
 				bodyMove();
 				snake[0].x--;
@@ -56,59 +60,58 @@ var growth = false;  			//token that determines snake growth or not
 				snake[0].y++;
 				break;
 		}
-
+		// if eat a food
 		if(food.x == snake[0].x && food.y == snake[0].y){
 			score++;
 			$("#score").text(score);
 			growth=true;
-			setFood();
+			setFood(); // set new food
 		}
-		checkCollision();
-		checkWall();
-		emptySpace();
-		var test ="x and y: ";
+		checkCollision();	// check if collide with it's body
+		checkWall();		// check if arrive the wall
+		emptySpace();		// empty all space in order to redraw everything 
 		for (s in snake){
-			draw(snake[s].x, snake[s].y, "red"); 
-			test= test +s+" " +snake[s].x +" "+ snake[s].y +" ";
+			draw(snake[s].x, snake[s].y, "red");  // draw snake
 		}	
-		$("#test").text(test);	
-		draw(food.x,food.y,"blue");
+		draw(food.x,food.y,"blue");				  // draw food
 	}
 
+	// function control snake's body movement
 	function bodyMove(){
-		if (growth){
+		if (growth){ // if snake is growing, add a piece of body
 			snake.push({x:snake[snake.length-1].x,y:snake[snake.length-1].y});
 			growth=false;
 		}
 		for (i=snake.length-1;i>0;i--){
 			snake[i].x=snake[i-1].x;
 			snake[i].y=snake[i-1].y;
-		}
+		}// snake body move one step forward
 
 	}
 
+	// check collision if the snake eat itself
 	function checkCollision(){
-		head = snake.shift();
-		for (each in snake){
-			if (head.x == snake[each].x && head.y == snake[each].y){
-				$("#over").text("Game Over !");
-				clearInterval(gameProcess);
+		head = snake.shift();	// remove head from the array
+		for (each in snake){	// each part of snake body execpt head
+			if (head.x == snake[each].x && head.y == snake[each].y){ 	// if snake head has same loaction with any part of its body
+				$("#over").text("Game Over !");	 //game over
+				clearInterval(gameProcess);		// turn off the movements
 			}
 		}
-		snake.unshift(head);
-
+		snake.unshift(head);	// add the head back to array
 	}
 
+	// check if snake hit the wall, when snake across the wall, it will shou up in opposite side wall with same move direction
 	function checkWall(){
-		if (snake[0].x < 0){
-			snake[0].x = (width-unit)/unit;
-		}else if(snake[0].x > (width-unit)/unit){
-			snake[0].x =0;
+		if (snake[0].x < 0){ // hit left wall
+			snake[0].x = (width-unit)/unit; //show up in right
+		}else if(snake[0].x > (width-unit)/unit){	// hit the right wall
+			snake[0].x =0;	// show up in left wall
 		}
-		if (snake[0].y < 0){
-			snake[0].y = (height-unit)/unit;
-		}else if(snake[0].y > (height-unit)/unit){
-			snake[0].y =0;
+		if (snake[0].y < 0){ //hit the top wall
+			snake[0].y = (height-unit)/unit;	//show up in bottom wall
+		}else if(snake[0].y > (height-unit)/unit){	// hit the bottom wall
+			snake[0].y =0;	//show up in top wall
 		}
 	}
 
@@ -117,43 +120,17 @@ var growth = false;  			//token that determines snake growth or not
 		var key = event.which;
 		// keyCode 37 - Left, 38 - Up, 39 - Right, 40 - Down
 		if (key == 37){
-			//bodyMove();
-			//snake[0].x--;
 			direction="Left";
 		}
 		if (key == 38){
-			//bodyMove();
-			//snake[0].y--;
 			direction="Up";
 		}
 		if (key == 39){
-			//bodyMove();
-			//snake[0].x++;
 			direction="Right"; 
 		}
 		if (key == 40){
-			//bodyMove();
-			//snake[0].y++;
 			direction="Down";
 		}
-		/*
-		if(food.x == snake[0].x && food.y == snake[0].y){
-			score++;
-			$("#score").text(score);
-			growth=true;
-		}
-		
-		checkCollision();
-		checkWall();
-		emptySpace();
-		var test ="x and y: ";
-		for (s in snake){
-			draw(snake[s].x, snake[s].y, "red"); 
-			test= test +s+" " +snake[s].x +" "+ snake[s].y +" ";
-		}	
-		$("#test").text(test);	
-		draw(food.x,food.y,"blue");
-		*/
 	});
 
 });
