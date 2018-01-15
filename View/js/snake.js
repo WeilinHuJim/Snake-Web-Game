@@ -7,9 +7,9 @@ var height = $("#snakeCanvas").height();
 var unit = 10; 					// the unit size of snake and food
 var direction = "Right"; 		// default direction is towards right
 var initialsnake ={
-		x:Math.round(Math.random()*2*(width-unit)/unit/3),
+		x:Math.round(Math.random()*(width-unit)/unit),
 		y:Math.round(Math.random()*(height-unit)/unit)
-		};  					// randomly pick initial location of snake,since default direction is right, the random value of x coordinate is 2/3 of the total width
+		};  					// randomly pick initial location of snake
 var snake = [initialsnake];    	// the entire entity of snake
 var food;
 setFood();
@@ -34,6 +34,44 @@ var growth = false;  			//token that determines snake growth or not
 	function draw(x, y, color){
 		ctx.fillStyle=color;
 		ctx.fillRect(x*unit,y*unit,unit,unit);
+	}
+
+	var gameProcess = setInterval(autoMove, 300); // set autoMove once by 0.3 second (300 miliseconds)
+	function autoMove(){
+		switch(direction){
+			case "Left":
+				bodyMove();
+				snake[0].x--;
+				break;
+			case "Up":
+				bodyMove();
+				snake[0].y--;
+				break;
+			case "Right":
+				bodyMove();
+				snake[0].x++;
+				break;
+			case "Down":
+				bodyMove();
+				snake[0].y++;
+				break;
+		}
+
+		if(food.x == snake[0].x && food.y == snake[0].y){
+			score++;
+			$("#score").text(score);
+			growth=true;
+		}
+		checkCollision();
+		checkWall();
+		emptySpace();
+		var test ="x and y: ";
+		for (s in snake){
+			draw(snake[s].x, snake[s].y, "red"); 
+			test= test +s+" " +snake[s].x +" "+ snake[s].y +" ";
+		}	
+		$("#test").text(test);	
+		draw(food.x,food.y,"blue");
 	}
 
 	function bodyMove(){
@@ -75,42 +113,43 @@ var growth = false;  			//token that determines snake growth or not
 		var key = event.which;
 		// keyCode 37 - Left, 38 - Up, 39 - Right, 40 - Down
 		if (key == 37){
-			bodyMove();
-			snake[0].x--;
+			//bodyMove();
+			//snake[0].x--;
 			direction="Left";
 		}
 		if (key == 38){
-			bodyMove();
-			snake[0].y--;
+			//bodyMove();
+			//snake[0].y--;
 			direction="Up";
 		}
 		if (key == 39){
-			bodyMove();
-			snake[0].x++;
+			//bodyMove();
+			//snake[0].x++;
 			direction="Right"; 
 		}
 		if (key == 40){
-			bodyMove();
-			snake[0].y++;
+			//bodyMove();
+			//snake[0].y++;
 			direction="Down";
 		}
-
+		/*
 		if(food.x == snake[0].x && food.y == snake[0].y){
 			score++;
 			$("#score").text(score);
 			growth=true;
-			//snake.push({x:food.x,y:food.y});
 		}
+		
 		checkCollision();
 		checkWall();
 		emptySpace();
 		var test ="x and y: ";
 		for (s in snake){
-			draw(snake[s].x, snake[s].y, "red"); //draw snake square
+			draw(snake[s].x, snake[s].y, "red"); 
 			test= test +s+" " +snake[s].x +" "+ snake[s].y +" ";
 		}	
 		$("#test").text(test);	
 		draw(food.x,food.y,"blue");
+		*/
 	});
 
 });
