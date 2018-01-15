@@ -19,7 +19,6 @@ draw(food.x,food.y,"blue"); 	//draw food square
 draw(snake[0].x, snake[0].y, "red"); //draw snake square
 var growth = false;  			//token that determines snake growth or not
 	function setFood(){
-		// while ....
 		food = {
 			x:Math.round(Math.random()*(width-unit)/unit),
 			y:Math.round(Math.random()*(height-unit)/unit)
@@ -42,12 +41,10 @@ var growth = false;  			//token that determines snake growth or not
 			snake.push({x:snake[snake.length-1].x,y:snake[snake.length-1].y});
 			growth=false;
 		}
-
 		for (i=snake.length-1;i>0;i--){
 			snake[i].x=snake[i-1].x;
 			snake[i].y=snake[i-1].y;
 		}
-		
 	}
 
 	function checkCollision(){
@@ -58,6 +55,19 @@ var growth = false;  			//token that determines snake growth or not
 			}
 		}
 		snake.unshift(head);
+	}
+
+	function checkWall(){
+		if (snake[0].x < 0){
+			snake[0].x = (width-unit)/unit;
+		}else if(snake[0].x > (width-unit)/unit){
+			snake[0].x =0;
+		}
+		if (snake[0].y < 0){
+			snake[0].y = (height-unit)/unit;
+		}else if(snake[0].y > (height-unit)/unit){
+			snake[0].y =0;
+		}
 	}
 
 	// function interact with keyboard left, up, right, down
@@ -92,6 +102,7 @@ var growth = false;  			//token that determines snake growth or not
 			//snake.push({x:food.x,y:food.y});
 		}
 		checkCollision();
+		checkWall();
 		emptySpace();
 		var test ="x and y: ";
 		for (s in snake){
