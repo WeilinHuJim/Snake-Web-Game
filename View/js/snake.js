@@ -61,6 +61,7 @@ var growth = false;  			//token that determines snake growth or not
 			score++;
 			$("#score").text(score);
 			growth=true;
+			setFood();
 		}
 		checkCollision();
 		checkWall();
