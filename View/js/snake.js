@@ -83,6 +83,7 @@ var growth = false;  			//token that determines snake growth or not
 			snake[i].x=snake[i-1].x;
 			snake[i].y=snake[i-1].y;
 		}
+
 	}
 
 	function checkCollision(){
@@ -90,9 +91,11 @@ var growth = false;  			//token that determines snake growth or not
 		for (each in snake){
 			if (head.x == snake[each].x && head.y == snake[each].y){
 				$("#over").text("Game Over !");
+				clearInterval(gameProcess);
 			}
 		}
 		snake.unshift(head);
+
 	}
 
 	function checkWall(){
