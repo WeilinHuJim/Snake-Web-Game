@@ -18,7 +18,7 @@ var score = 0					// score start from 0
 draw(food.x,food.y,"blue"); 	//draw food square
 draw(snake[0].x, snake[0].y, "red"); //draw snake square
 var growth = false;  			//token that determines snake growth or not
-	
+var paused = false;			
 	// generate food at random location
 	function setFood(){
 		food = {
@@ -148,8 +148,22 @@ var growth = false;  			//token that determines snake growth or not
 			y:Math.round(Math.random()*(height-unit)/unit)
 		};  					
 		snake = [initialsnake]; 		//reset snake
+		direction="Right";				//reset direction
 		draw(food.x,food.y,"blue"); 	//draw food square
 		draw(snake[0].x, snake[0].y, "red"); //draw snake square
 		growth = false;  				// reset the growth token
 	}
+
+	$("#pause").on('click', function(){
+		if (paused == false){
+			clearInterval(gameProcess);	
+			$("#pause").text("Resume");
+			paused = true;
+		}
+		else{
+			gameProcess = setInterval(autoMove, 300);
+			$("#pause").text("Pause");
+			paused = false;
+		}
+	});
 });
