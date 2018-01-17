@@ -133,4 +133,23 @@ var growth = false;  			//token that determines snake growth or not
 		}
 	});
 
+	// when start button is clicked
+	$("#start").on('click', function(){
+		restart();	// game restart
+	});
+
+	function restart(){
+		emptySpace(); 	//empty the board
+		score = 0;		// clear the score
+		$("#score").text(score);
+		setFood();		// reset food
+		initialsnake ={
+			x:Math.round(Math.random()*(width-unit)/unit),
+			y:Math.round(Math.random()*(height-unit)/unit)
+		};  					
+		snake = [initialsnake]; 		//reset snake
+		draw(food.x,food.y,"blue"); 	//draw food square
+		draw(snake[0].x, snake[0].y, "red"); //draw snake square
+		growth = false;  				// reset the growth token
+	}
 });
