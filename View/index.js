@@ -1,9 +1,18 @@
-var http = require('http');
-var fs = require('fs');
-http.createServer(function (req, res){
-	fs.readFile('snake.html', function (err, data){
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		res.write(data);
-		res.end();
-	});
-}).listen(8080);
+
+var express = require('express');
+var app = express();
+
+app.use('/', express.static(__dirname+'/'));
+
+app.get('/', function(req,res){
+	res.sendFile(__dirname+"/"+"Snake.html");
+})
+
+
+var server = app.listen(8080, function () {
+   var host = server.address().address
+   var port = server.address().port
+
+   console.log("Example app listening at http://%s:%s", host, port)
+
+})
