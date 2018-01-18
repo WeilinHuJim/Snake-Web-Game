@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 var snakeCanvas = $("#snakeCanvas")[0];
 var ctx = snakeCanvas.getContext("2d");
 var width = $("#snakeCanvas").width();
