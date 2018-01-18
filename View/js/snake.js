@@ -166,4 +166,9 @@ var paused = false;
 			paused = false;
 		}
 	});
+
+	$("#stop").on('click', function(){
+		$("#over").text("Game Over !");	 //game over
+		clearInterval(gameProcess);		// turn off the movements
+	});
 });
