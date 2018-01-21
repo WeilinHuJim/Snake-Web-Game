@@ -7,7 +7,7 @@ app.use('/', express.static(__dirname+'/views'));
 
 app.get('/', function(req,res){
 	//res.sendFile(__dirname+"/"+"Snake.html");
-	res.render('Snake');
+	res.render('Snake', {test: "Try pass value to page" });
 })
 
 
