@@ -24,16 +24,25 @@ connection.connect(function(err){
 });
 */
 
-	//findRecord = function(){
-		var searchResult;
+	function searchRecord(callback){
+		
 		connection.query('SELECT * FROM snake_record', function(err, results){
 			if (err) throw err;
-			console.log("original");
-    		console.log(results);
-    		searchResult = results;
-    		console.log(searchResult);
-		});
-		console.log(searchResult);
-	//}
+			else{
+				console.log("original");
+	    		console.log(results);
+	    		callback(results);
+	    		//searchResult = results;
+	    		//return searchResult;
+	    		//console.log(searchResult);
+			}
+			
+		});		
+	}
 
+	function sendToBrowser(data){
+		console.log(data);
+	}
+
+	searchRecord(sendToBrowser);
 //};
