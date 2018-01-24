@@ -24,25 +24,18 @@ connection.connect(function(err){
 });
 */
 
-	function searchRecord(callback){
-		
-		connection.query('SELECT * FROM snake_record', function(err, results){
+	async function searchRecord(){
+		//var searchResult;
+		var searchResult = await connection.query('SELECT * FROM snake_record', function(err, results){
 			if (err) throw err;
 			else{
 				console.log("original");
 	    		console.log(results);
-	    		callback(results);
-	    		//searchResult = results;
-	    		//return searchResult;
-	    		//console.log(searchResult);
+				searchResult = results;
 			}
 			
-		});		
+		});	
+		console.log(searchResult);
 	}
 
-	function sendToBrowser(data){
-		console.log(data);
-	}
-
-	searchRecord(sendToBrowser);
-//};
+searchRecord();
